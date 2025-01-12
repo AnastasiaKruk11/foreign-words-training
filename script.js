@@ -49,12 +49,15 @@ const words = [{
 ]
 
 let n = 0;
+wordsProgress.value = 20;
 let timerMode = 'off';
 const timerClock = timer.innerText.split(':');
 
 let minutes = timerClock[0];
 let seconds = timerClock[1];
 let timerRun;
+
+localStorage.clear();
 
 renderStudyCards();
 
@@ -79,9 +82,9 @@ controlBtns.addEventListener('click', (event) => {
     wordBack.textContent = words[n].rus;
     useBack.textContent = words[n].use;
 
-    if (n === 4) {
+    if (n === words.length - 1) {
         nextBtn.disabled = true;
-    } else if (n <= 3 && n >= 1) {
+    } else if (n < words.length - 1 && n > 0) {
         nextBtn.disabled = false;
         backBtn.disabled = false;
     } else if (n === 0) {
@@ -136,6 +139,7 @@ examField.addEventListener('click', (event) => {
                 n++;
                 correctPercent.textContent = `${(n * 100) / 5}%`;
                 examProgress.value = (n * 100) / 5;
+                secondWord.classList.add('correct');
                 firstWord.classList.add('fade-out');
                 secondWord.classList.add('fade-out');
                 firstWord = '';
